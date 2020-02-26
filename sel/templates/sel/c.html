@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+   {% load sel_extras %}
+<title>Selecting Department</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+<link rel="stylesheet" href="static/sel/main.css">
+<body>
+
+<div class="bgimg w3-text-black">
+  <div class="w3-display-middle w3-large">
+   {% if request.user|has_group:"student" %}
+     <a href="chem" class="w3-button w3-yellow">chem</a></br>
+     <a href="bio" class="w3-button w3-yellow">bio</a></br>
+     <a href="phy" class="w3-button w3-yellow">physics</a></br>
+     <a href="library" class="w3-button w3-yellow">library</a></br>
+     <a href="password_change" class="w3-button w3-yellow">change password</a></br>
+   {% endif %}  
+     {% if  user.is_superuser %}
+     <a href="registration" class="w3-button w3-yellow"> register user </a></br>
+     {% endif %}
+  </div>
+<div>
+{% for message in messages %}
+   <font color ='black'><h3> {{message}} </h3></font>
+{% endfor %}
+
+</div>
+</body>
+</html>

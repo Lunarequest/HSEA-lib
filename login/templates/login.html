@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<title>HSEA Library</title>
+<head>
+ <!-- W3shcool css-->
+ <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+ <!-- Font Awesome -->
+ <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+ <!-- Bootstrap -->
+ <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet">
+ <!-- Material Design for Bootstrap -->
+ <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.5.16/css/mdb.min.css" rel="stylesheet">
+<style>
+.mycustom-jumbotron {
+  width: 300px;
+  margin-top: 180px;
+  margin-left: 825px;
+}
+header{
+  background-color:#203D7E;
+}
+button{
+  height:60px;
+  width:200px;
+  font-size: large;
+  background-color:#203D7E;
+}
+
+p{
+  text-align: left;
+  font-size: large;
+  font-family:'Times New Roman';
+}
+
+input[type=text], input[type=password] {
+      width: 100%;
+      padding: 8px 4px;
+      margin: 0 0;
+      display: inline-block;
+      border: 1px solid #ccc;
+      box-sizing: border-box;
+      }
+input[type=submit]
+{
+  background-color: #4CAF50;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+}
+</style>
+</head>
+<body>
+  <header>
+  <div align = "center">
+    <button class=" w3-button" style="color:red">HSEA LIBRARY</button>
+  </div>
+  </header>
+    <div>
+        <div id="formContent">
+          <!-- Tabs Titles -->
+          <div align="middle" class = "p jumbotron mycustom-jumbotron" style="border-radius:50px 50px 50px 50px;">
+          <!-- Icon -->
+          <div class="wow fadeIn slow">
+            <img src="/static/login/img/hsea-logo.jpg" id="icon" alt="User Icon" />
+          </div>
+      
+          <!-- Login Form -->
+  
+            <form method="POST">
+              {% csrf_token %}
+                <p><b>Username</b></p>
+                <input type="text" name="usr" placeholder="login"></br>
+                <p><b>Password</b></p>
+                <input type="password" name="pswd" placeholder="password"></br>
+                <input type="submit" >
+            </form>
+         
+      
+
+      
+        </div>
+      </div>
+    </div>
+    <!-- jQuery -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+  <!-- Popper.js -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"></script>
+
+  <!-- Bootstrap -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/js/bootstrap.min.js"></script>
+
+  <!-- Material Design for Bootstrap -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.5.16/js/mdb.min.js"></script>
+
+  <script>
+    new WOW().init();
+    ( ".wow" ).addClass( "fadeIn" );
+  </script>
+</body>
