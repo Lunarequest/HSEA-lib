@@ -364,16 +364,6 @@ CREATE TABLE public.django_session (
 ALTER TABLE public.django_session OWNER TO advaith;
 
 --
--- Name: sms; Type: TABLE; Schema: public; Owner: advaith
---
-
-CREATE TABLE public.sms (
-);
-
-
-ALTER TABLE public.sms OWNER TO advaith;
-
---
 -- Name: auth_group id; Type: DEFAULT; Schema: public; Owner: advaith
 --
 
@@ -491,7 +481,7 @@ COPY public.auth_permission (id, name, content_type_id, codename) FROM stdin;
 --
 
 COPY public.auth_user (id, password, last_login, is_superuser, username, first_name, last_name, email, is_staff, is_active, date_joined) FROM stdin;
-1	pbkdf2_sha256$180000$afw2y00zQsNf$ZQCJA01ZLvcKnLcC+YyQ4xHIIcycYIRd2sP0ph9xHgQ=	2020-02-26 13:54:59.674074+05:30	t	admin			advaith.madhukar@gmail.com	t	t	2020-02-24 16:11:21.565035+05:30
+1	pbkdf2_sha256$180000$afw2y00zQsNf$ZQCJA01ZLvcKnLcC+YyQ4xHIIcycYIRd2sP0ph9xHgQ=	2020-02-26 13:54:59+05:30	t	admin			advaith.madhukar@gmail.com	t	t	2020-02-24 16:11:21+05:30
 \.
 
 
@@ -500,6 +490,7 @@ COPY public.auth_user (id, password, last_login, is_superuser, username, first_n
 --
 
 COPY public.auth_user_groups (id, user_id, group_id) FROM stdin;
+1	1	2
 \.
 
 
@@ -518,6 +509,7 @@ COPY public.auth_user_user_permissions (id, user_id, permission_id) FROM stdin;
 COPY public.django_admin_log (id, action_time, object_id, object_repr, action_flag, change_message, content_type_id, user_id) FROM stdin;
 1	2020-02-26 13:55:21.776311+05:30	1	student	1	[{"added": {}}]	3	1
 2	2020-02-26 13:55:35.889681+05:30	2	teacher	1	[{"added": {}}]	3	1
+3	2020-02-26 20:32:03.781777+05:30	1	admin	2	[{"changed": {"fields": ["Groups"]}}]	4	1
 \.
 
 
@@ -570,14 +562,6 @@ ryr726cdskez6dn22a62j4acjsmiacy5	NDFkYzU0NTZmMWNiN2VlODM0OTkwZTAzOTJiNDY1MDc2MDM
 
 
 --
--- Data for Name: sms; Type: TABLE DATA; Schema: public; Owner: advaith
---
-
-COPY public.sms  FROM stdin;
-\.
-
-
---
 -- Name: auth_group_id_seq; Type: SEQUENCE SET; Schema: public; Owner: advaith
 --
 
@@ -602,7 +586,7 @@ SELECT pg_catalog.setval('public.auth_permission_id_seq', 24, true);
 -- Name: auth_user_groups_id_seq; Type: SEQUENCE SET; Schema: public; Owner: advaith
 --
 
-SELECT pg_catalog.setval('public.auth_user_groups_id_seq', 1, false);
+SELECT pg_catalog.setval('public.auth_user_groups_id_seq', 1, true);
 
 
 --
@@ -623,7 +607,7 @@ SELECT pg_catalog.setval('public.auth_user_user_permissions_id_seq', 1, false);
 -- Name: django_admin_log_id_seq; Type: SEQUENCE SET; Schema: public; Owner: advaith
 --
 
-SELECT pg_catalog.setval('public.django_admin_log_id_seq', 2, true);
+SELECT pg_catalog.setval('public.django_admin_log_id_seq', 3, true);
 
 
 --
