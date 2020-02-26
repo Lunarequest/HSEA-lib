@@ -17,7 +17,10 @@
      <a href="phy" class="w3-button w3-yellow">physics</a></br>
      <a href="library" class="w3-button w3-yellow">library</a></br>
      <a href="password_change" class="w3-button w3-yellow">change password</a></br>
-   {% endif %}  
+    {% elif request.user|has_group:"teacher" %}
+      <a href="database" class="w3-button w3-yellow">View Database</a></br>
+      <a href="latebooks" class="w3-button w3-yellow">Late Dues</a></br>
+   {% endif %}
      {% if  user.is_superuser %}
      <a href="registration" class="w3-button w3-yellow"> register user </a></br>
      {% endif %}
