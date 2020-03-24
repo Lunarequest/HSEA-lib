@@ -21,4 +21,5 @@ urlpatterns = [
     path('', include('login.urls')),
     path('login', include('login.urls')),
     path('select', include('sel.urls')),
+    path('database', include('database.urls'))
 ]
