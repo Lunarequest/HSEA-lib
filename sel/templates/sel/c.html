@@ -12,11 +12,8 @@
 <div class="bgimg w3-text-black">
   <div class="w3-display-middle w3-large">
    {% if request.user|has_group:"student" %}
-     <a href="chem" class="w3-button w3-yellow">chem</a></br>
-     <a href="bio" class="w3-button w3-yellow">bio</a></br>
-     <a href="phy" class="w3-button w3-yellow">physics</a></br>
-     <a href="library" class="w3-button w3-yellow">library</a></br>
-     <a href="password_change" class="w3-button w3-yellow">change password</a></br>
+     <a href="library/issued_books" class="w3-button w3-yellow">Issued Books</a></br>
+     <a href="library/issue" class="w3-button w3-yellow">Issue Book</a></br>
    {% elif request.user|has_group:"teacher" %}
       <a href="database" class="w3-button w3-yellow">View Database</a></br>
       <a href="latebooks" class="w3-button w3-yellow">Late Dues</a></br>
