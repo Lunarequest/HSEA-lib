@@ -1,6 +1,6 @@
+from datetime import datetime, timedelta
 from django.shortcuts import render, redirect, HttpResponse
 from .models import books, book_ind, Issues
-
 # Create your views here.
 def display(request):
     items = books.objects.all()
@@ -36,9 +36,36 @@ def add_hsea(request, pk):
         return response
 
 
-def issue_book(request, pk):
+def issue_book(request):
     if request.method == "POST":
-        pass
+        """need to add auth for student id"""
+        Student_id = request.POST['student_id']
+        HSEA_code = request.POST['code']
+        issue_date = datetime.now()
+        return_date = datetime.now() + timedelta(days=7)
+        x = book_ind.objects.values('Name').filter(pk=HSEA_code).values_list('Name', flat=True)
+        Name = x[0]
+        x = book_ind.objects.values('ISBN').filter(pk=HSEA_code).values_list('ISBN', flat=True)
+        ISBN = x[0]
+        link = books.objects.get(pk=ISBN)
+        openi = Issues(Ind_Book_ID=HSEA_code, ISBN=ISBN, Name=Name, student_id=Student_id, issue_date=issue_date, return_date=return_date, Link=link)
+        print(openi)
+        openi.save()
+        return redirect("/select")
     else:
-        response = render(request, 'lib/issue.html')
+        response = render(request, 'student/issue.html')
+        return response
+
+def returns(request, pk):
+    Issues.objects.filter(pk=pk).delete()
+    response = redirect("/database")
+    return response
+def pull(request):
+    if request.method == "POST":
+        student_id = request.POST["student_id"]
+        items = Issues.objects.filter(student_id=student_id)
+        response = render(request, "student/view_db.html", locals())
+        return response
+    else:
+        response = render(request, "student/get_id.html")
         return response
