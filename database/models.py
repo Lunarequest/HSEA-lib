@@ -23,3 +23,12 @@ class Issues(models.Model):
     issue_date = models.DateField()
     return_date = models.DateField()
     Link = models.ForeignKey(books, on_delete=models.CASCADE)
+
+class Late_dues(models.Model):
+    Link = models.ForeignKey(Issues, on_delete=models.CASCADE)
+    student_id = models.PositiveIntegerField()
+    Ind_Book_ID = models.PositiveIntegerField(primary_key=True)
+    Name = models.CharField(max_length=1000)
+    return_date = models.DateField()
+    delay = models.PositiveIntegerField()
+    reported = models.BooleanField(default=False)

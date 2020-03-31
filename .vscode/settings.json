@@ -1,20 +1,24 @@
 {
     "python.linting.enabled": true,
     "python.linting.pylintEnabled": true,
+    "python.linting.pylintArgs": [
+      "--disable=C0111", // missing docstring
+      "--load-plugins=pylint_django",
+   ],
     "workbench.colorCustomizations": {
-        "activityBar.background": "#fa1b49",
-        "activityBar.activeBackground": "#fa1b49",
-        "activityBar.activeBorder": "#155e02",
-        "activityBar.foreground": "#e7e7e7",
-        "activityBar.inactiveForeground": "#e7e7e799",
-        "activityBarBadge.background": "#155e02",
-        "activityBarBadge.foreground": "#e7e7e7",
-        "titleBar.activeBackground": "#dd0531",
-        "titleBar.inactiveBackground": "#dd053199",
-        "titleBar.activeForeground": "#e7e7e7",
-        "titleBar.inactiveForeground": "#e7e7e799",
-        "statusBar.background": "#dd0531",
-        "statusBarItem.hoverBackground": "#fa1b49",
-        "statusBar.foreground": "#e7e7e7"
-    }
+      "activityBar.background": "#0000",
+      "activityBar.activeBackground": "#0000",
+      "activityBar.activeBorder": "#0000ff ",
+      "activityBar.foreground": "#0000",
+      "activityBar.inactiveForeground": "#e7e7e799",
+      "activityBarBadge.background": "#155e02",
+      "activityBarBadge.foreground": "#e7e7e7",
+      "titleBar.activeBackground": "#0000",
+      "titleBar.inactiveBackground": "#0000",
+      "titleBar.activeForeground": "#e7e7e7",
+      "titleBar.inactiveForeground": "#e7e7e799",
+      "statusBar.background": "#0000",
+      "statusBarItem.hoverBackground": "#0000",
+      "statusBar.foreground": "#e7e7e7"
+  }
 }

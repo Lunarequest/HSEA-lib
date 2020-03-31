@@ -1,26 +1,28 @@
 <!DOCTYPE html>
 <html>
-   {% load sel_extras %}
 <title>Selecting Task</title>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
 <link rel="stylesheet" href="static/sel/main.css">
+<style>
+    body,h1 {font-family: "Raleway", sans-serif}
+    body, html {height: 100%}
+    .bgimg {
+  background-image: url('https://headstarteducationalacademy.edu.in/wp-content/uploads/2018/08/assembly.jpg');
+  min-height: 100%;
+  background-position: center;
+  background-size: cover;
+}
+</style>
 <body>
 
 <div class="bgimg w3-text-black">
   <div class="w3-display-middle w3-large">
-   {% if request.user|has_group:"student" %}
-     <a href="library/issued_books" class="w3-button w3-yellow">Issued Books</a></br>
-     <a href="library/issue" class="w3-button w3-yellow">Issue Book</a></br>
-   {% endif %}
-   {% if request.user|has_group:"teacher" %}
-      <a href="database" class="w3-button w3-yellow">View Database</a></br>
-      <a href="database/latebooks" class="w3-button w3-yellow">Late Dues</a></br>
-   {% endif %}
    {% if  user.is_superuser %}
-     <a href="admin_panel" class="w3-button w3-yellow">Admin Tasks</a>
+        <a href="create_grade" class="w3-button w3-yellow">Create Grade</a><br/>
+        <a href="view_grade" class="w3-button w3-yellow">View Grades</a>
    {% endif %}
   </div>
 <div>

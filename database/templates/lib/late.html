@@ -95,18 +95,12 @@ p{
 <div class="topnav">
     <a href="/logout">Logout</a>
     <a href="/select">Menu</a>
-    <div class = 'form'>
-      <form method = 'POST'>
-      {% csrf_token %}
-        <input = "search" name='q' id ='id_q'  placeholder = 'Search...'>
-      </form>
+    <a href="/database/report">Report Students</a>
     </div>
 </div>
-{% if items %}
 <table class="table">
     <thead class="thead-dark">
         <tr>
-            <th>ISBN</th>
             <th>HSEA Code</th>
             <th>Title</th>
             <th>Return Date</th>
@@ -115,7 +109,6 @@ p{
     <tbody>
     {% for item in items %}
         <tr>
-        <td>{{item.ISBN}}</td>
         <td>{{item.Ind_Book_ID}}</td>
         <td>{{item.Name}}</td>
         <td>{{item.return_date}}</td>
@@ -123,7 +116,4 @@ p{
     {% endfor %}
     </tbody>
 </table>
-{% else %}
-    <p>You have not issue any books at this time</p>
-{% endif %}
 </body>

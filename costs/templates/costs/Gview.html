@@ -94,7 +94,7 @@ p{
 <body>
 <div class="topnav">
     <a href="/logout">Logout</a>
-    <a href="/select">Menu</a>
+    <a href="/admin_panel">Menu</a>
     <div class = 'form'>
       <form method = 'POST'>
       {% csrf_token %}
@@ -106,19 +106,15 @@ p{
 <table class="table">
     <thead class="thead-dark">
         <tr>
-            <th>ISBN</th>
-            <th>HSEA Code</th>
-            <th>Title</th>
-            <th>Return Date</th>
+            <th>Grade</th>
+            <th>Section</th>
         </tr>
     </thead>
     <tbody>
     {% for item in items %}
         <tr>
-        <td>{{item.ISBN}}</td>
-        <td>{{item.Ind_Book_ID}}</td>
-        <td>{{item.Name}}</td>
-        <td>{{item.return_date}}</td>
+        <td>{{item.Grade}}</td>
+        <td>{{item.Section}}</td>
         </tr>
     {% endfor %}
     </tbody>
