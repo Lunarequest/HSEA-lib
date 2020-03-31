@@ -10,6 +10,9 @@
           font-size: larger;
           font-family:'Baloo Thambi 2', cursive;
        }
+       b{
+           color: red;
+       }
       .mycustom-jumbotron {
             width: 300px;
             margin-top: 180px;
@@ -19,6 +22,9 @@
 </head>
 <body>
     <div align="middle" class = " jumbotron mycustom-jumbotron" style="border-radius:50px 50px 50px 50px;">
+        {% for message in messages %}
+            <b>{{message}}</b>
+        {% endfor %}
         <form method="POST">
             {% csrf_token %}
             <p>Student Id</p>

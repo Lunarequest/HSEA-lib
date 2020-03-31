@@ -1,6 +1,8 @@
 from datetime import datetime, timedelta
 from django.shortcuts import render, redirect, HttpResponse
+from django.contrib import messages
 from .models import books, book_ind, Issues, Late_dues
+from costs.models import student
 # Create your views here.
 def display(request):
     items = books.objects.all()
@@ -40,21 +42,27 @@ def issue_book(request):
     if request.method == "POST":
         """need to add auth for student id"""
         Student_id = request.POST['student_id']
-        HSEA_code = request.POST['code']
-        if Issues.objects.filter( Ind_Book_ID=HSEA_code).exists():
-            return render(request, "bdalready_issued.html")
+        if student.objects.filter(Student_id=Student_id).exists():
+            HSEA_code = request.POST['code']
+            if Issues.objects.filter( Ind_Book_ID=HSEA_code).exists():
+                return render(request, "lib/already_issued.html")
+            elif book_ind.objects.filter(pk=HSEA_code).exists():
+                issue_date = datetime.now()
+                return_date = datetime.now() + timedelta(days=7)
+                x = book_ind.objects.values('Name').filter(pk=HSEA_code).values_list('Name', flat=True)
+                Name = x[0]
+                x = book_ind.objects.values('ISBN').filter(pk=HSEA_code).values_list('ISBN', flat=True)
+                ISBN = x[0]
+                link = books.objects.get(pk=ISBN)
+                openi = Issues(Ind_Book_ID=HSEA_code, ISBN=ISBN, Name=Name, student_id=Student_id, issue_date=issue_date, return_date=return_date, Link=link)
+                openi.save()
+                return redirect("/select")
+            else:
+                messages.info(request, "The HSEA code does not exist")
+                return redirect("/library/issue")
         else:
-            issue_date = datetime.now()
-            return_date = datetime.now() + timedelta(days=7)
-            x = book_ind.objects.values('Name').filter(pk=HSEA_code).values_list('Name', flat=True)
-            Name = x[0]
-            x = book_ind.objects.values('ISBN').filter(pk=HSEA_code).values_list('ISBN', flat=True)
-            ISBN = x[0]
-            link = books.objects.get(pk=ISBN)
-            openi = Issues(Ind_Book_ID=HSEA_code, ISBN=ISBN, Name=Name, student_id=Student_id, issue_date=issue_date, return_date=return_date, Link=link)
-            print(openi)
-            openi.save()
-            return redirect("/select")
+                messages.info(request, "The Student id does not exist")
+                return redirect("/library/issue")
     else:
         response = render(request, 'student/issue.html')
         return response
@@ -66,9 +74,13 @@ def returns(request, pk):
 def pull(request):
     if request.method == "POST":
         student_id = request.POST["student_id"]
-        items = Issues.objects.filter(student_id=student_id)
-        response = render(request, "student/view_db.html", locals())
-        return response
+        if student.objects.filter(Student_id=student_id).exists():
+            items = Issues.objects.filter(student_id=student_id)
+            response = render(request, "student/view_db.html", locals())
+            return response
+        else:
+            messages.info(request,"The supplied student id does not exist")
+            return redirect("/library/issued_books")
     else:
         response = render(request, "student/get_id.html")
         return response
