@@ -1,8 +1,9 @@
 from datetime import datetime, timedelta
 from django.shortcuts import render, redirect, HttpResponse
 from django.contrib import messages
+from django.core.mail import send_mail
 from .models import books, book_ind, Issues, Late_dues
-from costs.models import student
+from costs.models import student, grade
 # Create your views here.
 def display(request):
     items = books.objects.all()
@@ -97,8 +98,37 @@ def late(request):
         else:
             delta = datetime.now().date() -ret_date
             z = delta.days
-            q = Late_dues(Link=Link, student_id=S_id, Ind_Book_ID=HSEA_code,return_date=ret_date, delay=z)
+            row = book_ind.objects.values("Name").filter(pk=HSEA_code).values_list("Name", flat=True)
+            Name = row[0]
+            q = Late_dues(Link=Link, student_id=S_id, Ind_Book_ID=HSEA_code,return_date=ret_date, delay=z , Name=Name)
             q.save()
     items = Late_dues.objects.all()
     response = render(request, "lib/late.html", locals())
     return response
+
+def report(request):
+    late_dues = Late_dues.objects.all()
+    for account in late_dues.iterator():
+        student_id = account.student_id
+        grades = student.objects.values("student_grade").filter(pk=student_id).values_list("student_grade", flat=True)
+        grades = grades[0]
+        section = student.objects.values("section").filter(pk=student_id).values_list("section", flat=True)
+        section = section[0]
+        name = student.objects.values("Student_Name").filter(pk=student_id).values_list("Student_Name", flat=True)
+        name = name[0]
+        gradx = grade.objects.filter(Grade=grades).filter(Section=section)
+        for x in gradx:
+            email1 = x.email_1
+            email2 = x.email_2
+            message = f"""Dear Sir/Madam
+
+{name} has not returned the book {account.Name} please ensure it returned
+at the soonest possible.
+                      """
+            send_mail(
+            'Late returns',
+            message,
+            'teampaasta@gmail.com',
+            [email1, email2],
+)
+    return redirect("/database/latebooks")

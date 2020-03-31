@@ -11,7 +11,11 @@ def create_grade(request):
     if request.method == "POST":
         Grade = request.POST["Grade"]
         Section = request.POST["sec"]
-        q = grade(Grade=Grade, Section=Section)
+        Teacher1 = request.POST["1"]
+        Teacher2 = request.POST["2"]
+        mail1 = request.POST["m1"]
+        mail2 = request.POST["m2"]
+        q = grade(Grade=Grade, Section=Section, Teacher1=Teacher1, Teacher2=Teacher2, email_1=mail1, email_2=mail2 )
         q.save()
         return redirect("/admin_panel")
     else:
