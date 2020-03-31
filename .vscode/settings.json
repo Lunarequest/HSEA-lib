@@ -6,19 +6,14 @@
       "--load-plugins=pylint_django",
    ],
     "workbench.colorCustomizations": {
-      "activityBar.background": "#0000",
-      "activityBar.activeBackground": "#0000",
-      "activityBar.activeBorder": "#0000ff ",
-      "activityBar.foreground": "#0000",
-      "activityBar.inactiveForeground": "#e7e7e799",
-      "activityBarBadge.background": "#155e02",
-      "activityBarBadge.foreground": "#e7e7e7",
-      "titleBar.activeBackground": "#0000",
-      "titleBar.inactiveBackground": "#0000",
-      "titleBar.activeForeground": "#e7e7e7",
-      "titleBar.inactiveForeground": "#e7e7e799",
-      "statusBar.background": "#0000",
-      "statusBarItem.hoverBackground": "#0000",
-      "statusBar.foreground": "#e7e7e7"
-  }
+      "activityBar.background": "#1a1a1a00",
+      "activityBar.activeBackground": "#1a1a1a00",
+      "activityBar.activeBorder": "#606020",
+      "titleBar.activeBackground": "#00000000",
+      "titleBar.inactiveBackground": "#00000099",
+      "statusBar.background": "#00000000",
+      "statusBarItem.hoverBackground": "#1a1a1a00",
+      "tab.activeBorder": "#1a1a1a00"
+    },
+  "peacock.color": "#00000000"
 }
