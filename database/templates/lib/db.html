@@ -95,53 +95,52 @@ body {
     <a href="/logout">Logout</a>
     <a href="/select">Menu</a>
     <div class = 'form'>
-      <form method = 'POST'>
-      {% csrf_token %}
+      <form method = 'GET'>
         <input = "search" name='q' id ='id_q'  placeholder = 'Search...'>
       </form>
     </div>
 </div>
 <div class="w3-main w3-content w3-padding" style="max-width:2400px;margin-top:200px">
 {% if search%}
-      <div class="w3-third">
-      <img src="https://bsmedia.business-standard.com/_media/bs/img/article/2016-01/08/full/1452249934-3831.jpg" alt="Issue"
-           style="width:89%">
-            <!-- Trigger/Open the Modal -->
-            <p><button onclick="document.getElementById('id02').style.display='block'" style="width:auto;">Books By HSEA Code</button></p>
-            <!-- The Modal -->
-            <div id="id02" class="w3-modal">
-            <div class="w3-modal-content">
-            <div class="w3-container">
-            <span onclick="document.getElementById('id02').style.display='none'"
-            class="w3-button w3-display-topright">&times;</span>
-               <p><button> Books By HSEA Code</button></p>
-               <a href="/database">back to main page</a>
-                <table class="table">
-                <thead class="thead-dark">
-                    <tr>
-                        <th>ISBN</th>
-                        <th>HSEA Code</th>
-                        <th>Book name</th>
-                        <th>Issue Book</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                     {% for item in search %}
-                      <tr>
-                        <td>{{item.ISBN__ISBN}}</td>
-                        <td>{{item.Ind_Book_ID}}</td>
-                        <td>{{item.Name}}</td>
-                        <td>
-                            <a href = {% url 'db:issue_with_pk' item.Ind_Book_ID %}  class = "btn btn-warnning btn-sml" role = "button">issue</a>
-                        </td>
-                      </tr>
-                     {% endfor %}
-                  </tbody>
-                </table>
-            </div>
-            </div>
-            </div>
+<div class="w3-half">
+  <img src="https://miro.medium.com/max/900/1*AQ2Sm9PbZ31L5y7hGr_sFA.jpeg" style="width:100%">
+  <p><button onclick="document.getElementById('id03').style.display='block'" style="width:auto;">Issued Books</button></p>
+        <!-- The Modal -->
+        <div id="id03" class="w3-modal">
+        <div class="w3-modal-content">
+        <div class="w3-container">
+        <span onclick="document.getElementById('id03').style.display='none'"
+        class="w3-button w3-display-topright">&times;</span>
+        <p><button>Issued Books</button></p>
+            <table class="table">
+              <thead class="thead-dark">
+                <tr>
+                    <th>ISBN</th>
+                    <th>HSEA Code</th>
+                    <th>Book name</th>
+                    <th>Return Book</th>
+                </tr>
+              </thead>
+              <tbody>
+                 {% for items in item3 %}
+                 <tr>
+                   <td>{{items.ISBN}}</td>
+                   <td>{{items.Ind_Book_ID}}</td>
+                   <td>{{items.Name}}</td>
+                   <td>
+                    <a href = {% url 'db:return_with_pk' items.Ind_Book_ID%}  class = "btn btn-warning btn-sml" role = "button">Return</a>
+                  </td>
+                  </tr>
+                 {% endfor %}
+              </tbody>
+            </table>
+            <a href="/database/" class ="bnt bnt-lg btn-link">Exit search</a>
         </div>
+        </div>
+        </div>
+</div>
+
+
 {% else %}
   <!-- First Photo Grid-->
   <div class="w3-row-padding w3-padding-16 w3-center" id="food">

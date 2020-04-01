@@ -24,5 +24,6 @@ urlpatterns = [
     path('select', include('sel.urls')),
     path('database/', include('database.urls')),
     path('library/', include('database.urls')),
-    path('admin_panel/', include("costs.urls"))
+    path('admin_panel/', include("costs.urls")),
+    path('error/',include('database.urls'))
 ]

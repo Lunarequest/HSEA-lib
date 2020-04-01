@@ -93,14 +93,7 @@ p{
 </head>
 <body>
 <div class="topnav">
-    <a href="/logout">Logout</a>
     <a href="/select">Menu</a>
-    <div class = 'form'>
-      <form method = 'POST'>
-      {% csrf_token %}
-        <input = "search" name='q' id ='id_q'  placeholder = 'Search...'>
-      </form>
-    </div>
 </div>
 {% if items %}
 <table class="table">

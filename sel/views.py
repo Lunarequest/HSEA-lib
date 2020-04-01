@@ -1,6 +1,9 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 
 # Create your views here.
 def page(request):
-    response = render(request,'sel/c.html')
-    return response
+    if request.user.groups.filter(name__in=['teacher']) or request.user.groups.filter(name__in=['student']):
+        response = render(request,'sel/c.html')
+        return response
+    else:
+        return redirect("/error/402")

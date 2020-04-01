@@ -10,6 +10,7 @@ urlpatterns=[
     path('add_HSEA/<int:pk>', views.add_hsea, name="add_id_with_pk"),
     path('return/<int:pk>',  views.returns, name="return_with_pk"),
     path('latebooks', views.late,name="late_dues"),
-    path('report',views.report, name="report" )
+    path('report',views.report, name="report" ),
+    path('402',views.no_perms, name='402_error' )
     
 ]
