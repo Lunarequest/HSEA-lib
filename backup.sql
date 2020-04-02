@@ -2,8 +2,8 @@
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 12.1
--- Dumped by pg_dump version 12.1
+-- Dumped from database version 12.2
+-- Dumped by pg_dump version 12.2
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -239,6 +239,132 @@ ALTER SEQUENCE public.auth_user_user_permissions_id_seq OWNED BY public.auth_use
 
 
 --
+-- Name: costs_grade; Type: TABLE; Schema: public; Owner: advaith
+--
+
+CREATE TABLE public.costs_grade (
+    "Section" character varying(1000) NOT NULL,
+    "Grade" integer NOT NULL,
+    id integer NOT NULL,
+    "Teacher1" character varying(10000) NOT NULL,
+    "Teacher2" character varying(10000) NOT NULL,
+    email_1 character varying(254) NOT NULL,
+    email_2 character varying(254) NOT NULL,
+    CONSTRAINT "costs_grade_Grade_check" CHECK (("Grade" >= 0))
+);
+
+
+ALTER TABLE public.costs_grade OWNER TO advaith;
+
+--
+-- Name: costs_grade_id_seq; Type: SEQUENCE; Schema: public; Owner: advaith
+--
+
+CREATE SEQUENCE public.costs_grade_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.costs_grade_id_seq OWNER TO advaith;
+
+--
+-- Name: costs_grade_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: advaith
+--
+
+ALTER SEQUENCE public.costs_grade_id_seq OWNED BY public.costs_grade.id;
+
+
+--
+-- Name: costs_student; Type: TABLE; Schema: public; Owner: advaith
+--
+
+CREATE TABLE public.costs_student (
+    student_grade integer NOT NULL,
+    section character varying(1000) NOT NULL,
+    "Student_id" integer NOT NULL,
+    "Link_id" integer NOT NULL,
+    "Student_Name" character varying(100000) NOT NULL,
+    CONSTRAINT "costs_student_Student_id_check" CHECK (("Student_id" >= 0)),
+    CONSTRAINT costs_student_student_grade_check CHECK ((student_grade >= 0))
+);
+
+
+ALTER TABLE public.costs_student OWNER TO advaith;
+
+--
+-- Name: database_book_ind; Type: TABLE; Schema: public; Owner: advaith
+--
+
+CREATE TABLE public.database_book_ind (
+    "Ind_Book_ID" integer NOT NULL,
+    "ISBN" integer NOT NULL,
+    "Name" character varying(1000) NOT NULL,
+    "Link_id" integer NOT NULL,
+    CONSTRAINT "database_book_ind_ISBN_2f13980f_check" CHECK (("ISBN" >= 0)),
+    CONSTRAINT "database_book_ind_Ind_Book_ID_check" CHECK (("Ind_Book_ID" >= 0))
+);
+
+
+ALTER TABLE public.database_book_ind OWNER TO advaith;
+
+--
+-- Name: database_books; Type: TABLE; Schema: public; Owner: advaith
+--
+
+CREATE TABLE public.database_books (
+    "ISBN" integer NOT NULL,
+    "Name" character varying(1000) NOT NULL,
+    CONSTRAINT "database_books_ISBN_check" CHECK (("ISBN" >= 0))
+);
+
+
+ALTER TABLE public.database_books OWNER TO advaith;
+
+--
+-- Name: database_issues; Type: TABLE; Schema: public; Owner: advaith
+--
+
+CREATE TABLE public.database_issues (
+    "Ind_Book_ID" integer NOT NULL,
+    "Name" character varying(1000) NOT NULL,
+    student_id integer NOT NULL,
+    issue_date date NOT NULL,
+    "ISBN" integer NOT NULL,
+    return_date date NOT NULL,
+    "Link_id" integer NOT NULL,
+    CONSTRAINT "database_issues_ISBN_3f3fd459_check" CHECK (("ISBN" >= 0)),
+    CONSTRAINT "database_issues_Ind_Book_ID_check" CHECK (("Ind_Book_ID" >= 0)),
+    CONSTRAINT database_issues_student_id_check CHECK ((student_id >= 0))
+);
+
+
+ALTER TABLE public.database_issues OWNER TO advaith;
+
+--
+-- Name: database_late_dues; Type: TABLE; Schema: public; Owner: advaith
+--
+
+CREATE TABLE public.database_late_dues (
+    student_id integer NOT NULL,
+    "Ind_Book_ID" integer NOT NULL,
+    return_date date NOT NULL,
+    delay integer NOT NULL,
+    "Link_id" integer NOT NULL,
+    reported boolean NOT NULL,
+    "Name" character varying(1000) NOT NULL,
+    CONSTRAINT "database_late_dues_Ind_Book_ID_check" CHECK (("Ind_Book_ID" >= 0)),
+    CONSTRAINT database_late_dues_delay_check CHECK ((delay >= 0)),
+    CONSTRAINT database_late_dues_student_id_check CHECK ((student_id >= 0))
+);
+
+
+ALTER TABLE public.database_late_dues OWNER TO advaith;
+
+--
 -- Name: django_admin_log; Type: TABLE; Schema: public; Owner: advaith
 --
 
@@ -406,6 +532,13 @@ ALTER TABLE ONLY public.auth_user_user_permissions ALTER COLUMN id SET DEFAULT n
 
 
 --
+-- Name: costs_grade id; Type: DEFAULT; Schema: public; Owner: advaith
+--
+
+ALTER TABLE ONLY public.costs_grade ALTER COLUMN id SET DEFAULT nextval('public.costs_grade_id_seq'::regclass);
+
+
+--
 -- Name: django_admin_log id; Type: DEFAULT; Schema: public; Owner: advaith
 --
 
@@ -473,6 +606,30 @@ COPY public.auth_permission (id, name, content_type_id, codename) FROM stdin;
 22	Can change session	6	change_session
 23	Can delete session	6	delete_session
 24	Can view session	6	view_session
+25	Can add issues	7	add_issues
+26	Can change issues	7	change_issues
+27	Can delete issues	7	delete_issues
+28	Can view issues	7	view_issues
+29	Can add book_ind	8	add_book_ind
+30	Can change book_ind	8	change_book_ind
+31	Can delete book_ind	8	delete_book_ind
+32	Can view book_ind	8	view_book_ind
+33	Can add books	9	add_books
+34	Can change books	9	change_books
+35	Can delete books	9	delete_books
+36	Can view books	9	view_books
+37	Can add late_dues	10	add_late_dues
+38	Can change late_dues	10	change_late_dues
+39	Can delete late_dues	10	delete_late_dues
+40	Can view late_dues	10	view_late_dues
+41	Can add grade	11	add_grade
+42	Can change grade	11	change_grade
+43	Can delete grade	11	delete_grade
+44	Can view grade	11	view_grade
+45	Can add student	12	add_student
+46	Can change student	12	change_student
+47	Can delete student	12	delete_student
+48	Can view student	12	view_student
 \.
 
 
@@ -481,7 +638,7 @@ COPY public.auth_permission (id, name, content_type_id, codename) FROM stdin;
 --
 
 COPY public.auth_user (id, password, last_login, is_superuser, username, first_name, last_name, email, is_staff, is_active, date_joined) FROM stdin;
-1	pbkdf2_sha256$180000$afw2y00zQsNf$ZQCJA01ZLvcKnLcC+YyQ4xHIIcycYIRd2sP0ph9xHgQ=	2020-02-26 13:54:59+05:30	t	admin			advaith.madhukar@gmail.com	t	t	2020-02-24 16:11:21+05:30
+1	pbkdf2_sha256$180000$afw2y00zQsNf$ZQCJA01ZLvcKnLcC+YyQ4xHIIcycYIRd2sP0ph9xHgQ=	2020-04-02 13:45:01.209973+05:30	t	admin			advaith.madhukar@gmail.com	t	t	2020-02-24 16:11:21+05:30
 \.
 
 
@@ -491,6 +648,7 @@ COPY public.auth_user (id, password, last_login, is_superuser, username, first_n
 
 COPY public.auth_user_groups (id, user_id, group_id) FROM stdin;
 1	1	2
+2	1	1
 \.
 
 
@@ -503,6 +661,60 @@ COPY public.auth_user_user_permissions (id, user_id, permission_id) FROM stdin;
 
 
 --
+-- Data for Name: costs_grade; Type: TABLE DATA; Schema: public; Owner: advaith
+--
+
+COPY public.costs_grade ("Section", "Grade", id, "Teacher1", "Teacher2", email_1, email_2) FROM stdin;
+yellow	11	1	Advaith	Advaith	teampaasta@gmail.com	teampaasta@gmail.com
+\.
+
+
+--
+-- Data for Name: costs_student; Type: TABLE DATA; Schema: public; Owner: advaith
+--
+
+COPY public.costs_student (student_grade, section, "Student_id", "Link_id", "Student_Name") FROM stdin;
+11	yellow	1	1	Advaith
+\.
+
+
+--
+-- Data for Name: database_book_ind; Type: TABLE DATA; Schema: public; Owner: advaith
+--
+
+COPY public.database_book_ind ("Ind_Book_ID", "ISBN", "Name", "Link_id") FROM stdin;
+11	1	hacked	1
+\.
+
+
+--
+-- Data for Name: database_books; Type: TABLE DATA; Schema: public; Owner: advaith
+--
+
+COPY public.database_books ("ISBN", "Name") FROM stdin;
+1	hacked
+\.
+
+
+--
+-- Data for Name: database_issues; Type: TABLE DATA; Schema: public; Owner: advaith
+--
+
+COPY public.database_issues ("Ind_Book_ID", "Name", student_id, issue_date, "ISBN", return_date, "Link_id") FROM stdin;
+11	hacked	1	2020-03-31	1	2020-03-30	1
+\.
+
+
+--
+-- Data for Name: database_late_dues; Type: TABLE DATA; Schema: public; Owner: advaith
+--
+
+COPY public.database_late_dues (student_id, "Ind_Book_ID", return_date, delay, "Link_id", reported, "Name") FROM stdin;
+1	11	2020-03-30	1	11	f	hacked
+\.
+
+
+--
 -- Data for Name: django_admin_log; Type: TABLE DATA; Schema: public; Owner: advaith
 --
 
@@ -510,6 +722,14 @@ COPY public.django_admin_log (id, action_time, object_id, object_repr, action_fl
 1	2020-02-26 13:55:21.776311+05:30	1	student	1	[{"added": {}}]	3	1
 2	2020-02-26 13:55:35.889681+05:30	2	teacher	1	[{"added": {}}]	3	1
 3	2020-02-26 20:32:03.781777+05:30	1	admin	2	[{"changed": {"fields": ["Groups"]}}]	4	1
+4	2020-03-24 19:26:26.426985+05:30	1	admin	2	[{"changed": {"fields": ["Groups"]}}]	4	1
+5	2020-03-30 15:57:03.030114+05:30	11	book_ind object (11)	3		8	1
+6	2020-03-31 11:14:30.90696+05:30	11	Issues object (11)	2	[{"changed": {"fields": ["Return date"]}}]	7	1
+7	2020-03-31 11:31:24.063792+05:30	11	Late_dues object (11)	2	[{"changed": {"fields": ["Name"]}}]	10	1
+8	2020-03-31 18:25:22.461972+05:30	1	student object (1)	2	[{"changed": {"fields": ["Student Name"]}}]	12	1
+9	2020-03-31 21:45:58.567552+05:30	11	Issues object (11)	2	[{"changed": {"fields": ["Return date"]}}]	7	1
+10	2020-03-31 21:49:16.42571+05:30	11	Late_dues object (11)	3		10	1
+11	2020-03-31 22:06:31.293741+05:30	1	grade object (1)	2	[{"changed": {"fields": ["Teacher1", "Teacher2", "Email 1", "Email 2"]}}]	11	1
 \.
 
 
@@ -524,6 +744,12 @@ COPY public.django_content_type (id, app_label, model) FROM stdin;
 4	auth	user
 5	contenttypes	contenttype
 6	sessions	session
+7	database	issues
+8	database	book_ind
+9	database	books
+10	database	late_dues
+11	costs	grade
+12	costs	student
 \.
 
 
@@ -549,6 +775,24 @@ COPY public.django_migrations (id, app, name, applied) FROM stdin;
 15	auth	0010_alter_group_name_max_length	2020-02-24 15:40:10.402876+05:30
 16	auth	0011_update_proxy_permissions	2020-02-24 15:40:10.430612+05:30
 17	sessions	0001_initial	2020-02-24 15:40:10.548239+05:30
+18	database	0001_initial	2020-03-30 12:06:14.570714+05:30
+19	database	0002_issues_return_date	2020-03-30 12:12:11.142921+05:30
+20	database	0003_book_ind_name	2020-03-30 12:23:14.215596+05:30
+21	database	0004_auto_20200330_1233	2020-03-30 12:33:13.986886+05:30
+22	database	0005_auto_20200330_1605	2020-03-30 16:05:22.756248+05:30
+23	database	0006_late_dues	2020-03-31 10:50:17.83843+05:30
+24	database	0007_late_dues_reported	2020-03-31 11:01:21.834713+05:30
+25	database	0008_late_dues_name	2020-03-31 11:30:26.343+05:30
+26	costs	0001_initial	2020-03-31 12:34:42.935723+05:30
+27	costs	0002_auto_20200331_1239	2020-03-31 12:40:27.962448+05:30
+28	costs	0003_grade_id	2020-03-31 12:44:22.452136+05:30
+29	costs	0004_auto_20200331_1243	2020-03-31 12:44:22.468415+05:30
+30	costs	0005_auto_20200331_1244	2020-03-31 12:47:03.155881+05:30
+31	costs	0006_student	2020-03-31 13:51:25.47704+05:30
+32	costs	0007_student_student_name	2020-03-31 17:53:43.145368+05:30
+33	costs	0008_auto_20200331_1812	2020-03-31 18:13:01.39159+05:30
+34	costs	0009_auto_20200331_1821	2020-03-31 18:22:03.644185+05:30
+35	costs	0010_auto_20200331_2001	2020-03-31 20:01:37.463747+05:30
 \.
 
 
@@ -558,6 +802,8 @@ COPY public.django_migrations (id, app, name, applied) FROM stdin;
 
 COPY public.django_session (session_key, session_data, expire_date) FROM stdin;
 ryr726cdskez6dn22a62j4acjsmiacy5	NDFkYzU0NTZmMWNiN2VlODM0OTkwZTAzOTJiNDY1MDc2MDM1ZGExMzp7Il9hdXRoX3VzZXJfaWQiOiIxIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiJkMDI0OWQwZTNkZTgzZWYwYjIxNjc4OTg1MmFhZTBjYWMxMTdhYjMyIn0=	2020-03-11 13:54:59.743918+05:30
+xs4giv6ldwsj30mclipf9bkwmctbsgoo	NDFkYzU0NTZmMWNiN2VlODM0OTkwZTAzOTJiNDY1MDc2MDM1ZGExMzp7Il9hdXRoX3VzZXJfaWQiOiIxIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiJkMDI0OWQwZTNkZTgzZWYwYjIxNjc4OTg1MmFhZTBjYWMxMTdhYjMyIn0=	2020-04-13 23:02:44.43855+05:30
+pci9i1vv5xqmlydp6h92inoupinj3xfb	NDFkYzU0NTZmMWNiN2VlODM0OTkwZTAzOTJiNDY1MDc2MDM1ZGExMzp7Il9hdXRoX3VzZXJfaWQiOiIxIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiJkMDI0OWQwZTNkZTgzZWYwYjIxNjc4OTg1MmFhZTBjYWMxMTdhYjMyIn0=	2020-04-16 13:45:01.351199+05:30
 \.
 
 
@@ -579,14 +825,14 @@ SELECT pg_catalog.setval('public.auth_group_permissions_id_seq', 1, false);
 -- Name: auth_permission_id_seq; Type: SEQUENCE SET; Schema: public; Owner: advaith
 --
 
-SELECT pg_catalog.setval('public.auth_permission_id_seq', 24, true);
+SELECT pg_catalog.setval('public.auth_permission_id_seq', 48, true);
 
 
 --
 -- Name: auth_user_groups_id_seq; Type: SEQUENCE SET; Schema: public; Owner: advaith
 --
 
-SELECT pg_catalog.setval('public.auth_user_groups_id_seq', 1, true);
+SELECT pg_catalog.setval('public.auth_user_groups_id_seq', 2, true);
 
 
 --
@@ -604,24 +850,31 @@ SELECT pg_catalog.setval('public.auth_user_user_permissions_id_seq', 1, false);
 
 
 --
+-- Name: costs_grade_id_seq; Type: SEQUENCE SET; Schema: public; Owner: advaith
+--
+
+SELECT pg_catalog.setval('public.costs_grade_id_seq', 1, true);
+
+
+--
 -- Name: django_admin_log_id_seq; Type: SEQUENCE SET; Schema: public; Owner: advaith
 --
 
-SELECT pg_catalog.setval('public.django_admin_log_id_seq', 3, true);
+SELECT pg_catalog.setval('public.django_admin_log_id_seq', 11, true);
 
 
 --
 -- Name: django_content_type_id_seq; Type: SEQUENCE SET; Schema: public; Owner: advaith
 --
 
-SELECT pg_catalog.setval('public.django_content_type_id_seq', 6, true);
+SELECT pg_catalog.setval('public.django_content_type_id_seq', 12, true);
 
 
 --
 -- Name: django_migrations_id_seq; Type: SEQUENCE SET; Schema: public; Owner: advaith
 --
 
-SELECT pg_catalog.setval('public.django_migrations_id_seq', 17, true);
+SELECT pg_catalog.setval('public.django_migrations_id_seq', 35, true);
 
 
 --
@@ -718,6 +971,62 @@ ALTER TABLE ONLY public.auth_user_user_permissions
 
 ALTER TABLE ONLY public.auth_user
     ADD CONSTRAINT auth_user_username_key UNIQUE (username);
+
+
+--
+-- Name: costs_grade costs_grade_pkey; Type: CONSTRAINT; Schema: public; Owner: advaith
+--
+
+ALTER TABLE ONLY public.costs_grade
+    ADD CONSTRAINT costs_grade_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: costs_student costs_student_Student_id_9406206b_pk; Type: CONSTRAINT; Schema: public; Owner: advaith
+--
+
+ALTER TABLE ONLY public.costs_student
+    ADD CONSTRAINT "costs_student_Student_id_9406206b_pk" PRIMARY KEY ("Student_id");
+
+
+--
+-- Name: costs_student costs_student_Student_id_9406206b_uniq; Type: CONSTRAINT; Schema: public; Owner: advaith
+--
+
+ALTER TABLE ONLY public.costs_student
+    ADD CONSTRAINT "costs_student_Student_id_9406206b_uniq" UNIQUE ("Student_id");
+
+
+--
+-- Name: database_book_ind database_book_ind_pkey; Type: CONSTRAINT; Schema: public; Owner: advaith
+--
+
+ALTER TABLE ONLY public.database_book_ind
+    ADD CONSTRAINT database_book_ind_pkey PRIMARY KEY ("Ind_Book_ID");
+
+
+--
+-- Name: database_books database_books_pkey; Type: CONSTRAINT; Schema: public; Owner: advaith
+--
+
+ALTER TABLE ONLY public.database_books
+    ADD CONSTRAINT database_books_pkey PRIMARY KEY ("ISBN");
+
+
+--
+-- Name: database_issues database_issues_pkey; Type: CONSTRAINT; Schema: public; Owner: advaith
+--
+
+ALTER TABLE ONLY public.database_issues
+    ADD CONSTRAINT database_issues_pkey PRIMARY KEY ("Ind_Book_ID");
+
+
+--
+-- Name: database_late_dues database_late_dues_pkey; Type: CONSTRAINT; Schema: public; Owner: advaith
+--
+
+ALTER TABLE ONLY public.database_late_dues
+    ADD CONSTRAINT database_late_dues_pkey PRIMARY KEY ("Ind_Book_ID");
 
 
 --
@@ -824,6 +1133,34 @@ CREATE INDEX auth_user_username_6821ab7c_like ON public.auth_user USING btree (u
 
 
 --
+-- Name: costs_student_Link_id_3f4b7858; Type: INDEX; Schema: public; Owner: advaith
+--
+
+CREATE INDEX "costs_student_Link_id_3f4b7858" ON public.costs_student USING btree ("Link_id");
+
+
+--
+-- Name: database_book_ind_Link_id_34eebc88; Type: INDEX; Schema: public; Owner: advaith
+--
+
+CREATE INDEX "database_book_ind_Link_id_34eebc88" ON public.database_book_ind USING btree ("Link_id");
+
+
+--
+-- Name: database_issues_Link_id_131941d5; Type: INDEX; Schema: public; Owner: advaith
+--
+
+CREATE INDEX "database_issues_Link_id_131941d5" ON public.database_issues USING btree ("Link_id");
+
+
+--
+-- Name: database_late_dues_Link_id_dca0363b; Type: INDEX; Schema: public; Owner: advaith
+--
+
+CREATE INDEX "database_late_dues_Link_id_dca0363b" ON public.database_late_dues USING btree ("Link_id");
+
+
+--
 -- Name: django_admin_log_content_type_id_c4bce8eb; Type: INDEX; Schema: public; Owner: advaith
 --
 
@@ -905,6 +1242,38 @@ ALTER TABLE ONLY public.auth_user_user_permissions
 
 ALTER TABLE ONLY public.auth_user_user_permissions
     ADD CONSTRAINT auth_user_user_permissions_user_id_a95ead1b_fk_auth_user_id FOREIGN KEY (user_id) REFERENCES public.auth_user(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: costs_student costs_student_Link_id_3f4b7858_fk_costs_grade_id; Type: FK CONSTRAINT; Schema: public; Owner: advaith
+--
+
+ALTER TABLE ONLY public.costs_student
+    ADD CONSTRAINT "costs_student_Link_id_3f4b7858_fk_costs_grade_id" FOREIGN KEY ("Link_id") REFERENCES public.costs_grade(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: database_book_ind database_book_ind_Link_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: advaith
+--
+
+ALTER TABLE ONLY public.database_book_ind
+    ADD CONSTRAINT "database_book_ind_Link_id_fkey" FOREIGN KEY ("Link_id") REFERENCES public.database_books("ISBN") DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: database_issues database_issues_Link_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: advaith
+--
+
+ALTER TABLE ONLY public.database_issues
+    ADD CONSTRAINT "database_issues_Link_id_fkey" FOREIGN KEY ("Link_id") REFERENCES public.database_books("ISBN") DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: database_late_dues database_late_dues_Link_id_dca0363b_fk_database_; Type: FK CONSTRAINT; Schema: public; Owner: advaith
+--
+
+ALTER TABLE ONLY public.database_late_dues
+    ADD CONSTRAINT "database_late_dues_Link_id_dca0363b_fk_database_" FOREIGN KEY ("Link_id") REFERENCES public.database_issues("Ind_Book_ID") DEFERRABLE INITIALLY DEFERRED;
 
 
 --
