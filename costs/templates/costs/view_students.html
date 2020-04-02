@@ -102,6 +102,7 @@ p{
             <th>Student Name</th>
             <th>Student ID</th>
             <th>Edit Student</th>
+            <th>Remove Student</th>
         </tr>
     </thead>
     <tbody>
@@ -110,7 +111,8 @@ p{
         <td>{{item.Student_Name}}</td>
         <td>{{item.Student_id}}</td>
         <td><a href="{% url "costs:edit_student" item.Student_id %}" class="btn btn-sml btn-warning">Edit</a></td>
-        </tr>
+        <td><a href="{% url "costs:remove_with_pk" item.Student_id}"  class="btn btn-sml btn-warning">Remove</a></td>
+      </tr>
     {% endfor %}
     </tbody>
 </table>

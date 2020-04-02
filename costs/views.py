@@ -62,3 +62,7 @@ def edit_student(request,pk):
     else:
         response = render(request, "costs/edit_student.html")
         return response
+
+def remove_student(request, pk):
+    student.objects.filter(pk=pk).delete()
+    return redirect("/admin_panel/view_grade")

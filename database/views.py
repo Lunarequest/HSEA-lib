@@ -151,6 +151,7 @@ def report(request):
                 message,
                 'teampaasta@gmail.com',
                 [email1, email2],
+                fail_silently=True
     )
         return redirect("/database/latebooks")
     else:
