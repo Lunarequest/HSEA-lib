@@ -31,7 +31,7 @@ if DEBUG:
     EMAIL_PORT = 587
     EMAIL_HOST_USER = 'teampaasta@gmail.com'
     EMAIL_HOST_PASSWORD = '123passkey'
-ALLOWED_HOSTS = ["localhost","127.0.0.1"]
+ALLOWED_HOSTS = ["localhost", "127.0.0.1"]
 # Application definition
 
 INSTALLED_APPS = [
@@ -39,6 +39,8 @@ INSTALLED_APPS = [
     'sel',
     'costs',
     'database',
+    'reg',
+    'django_q',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -85,8 +87,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'postgres',
-        'USER':'advaith',
-        'PASSWORD':'123passkey', 
+        'USER': 'advaith',
+        'PASSWORD': '123passkey',
         'HOST': 'localhost',
         'PORT': ''
     }
@@ -110,6 +112,13 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
+# Configure your Q cluster
+# More details https://django-q.readthedocs.io/en/latest/configure.html
+# django Q is more for speeding up the system. for example sending mails.
+Q_CLUSTER = {
+    "name": "shop",
+    "orm": "default",  # Use Django's ORM + database for broker
+}
 
 
 # Internationalization
