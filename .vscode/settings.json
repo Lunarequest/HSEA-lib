@@ -4,16 +4,4 @@
     "python.linting.pylintArgs": [
       "--disable=C0111", // missing docstring
       "--load-plugins=pylint_django",
-   ],
-    "workbench.colorCustomizations": {
-      "activityBar.background": "#1a1a1a00",
-      "activityBar.activeBackground": "#1a1a1a00",
-      "activityBar.activeBorder": "#606020",
-      "titleBar.activeBackground": "#00000000",
-      "titleBar.inactiveBackground": "#00000099",
-      "statusBar.background": "#00000000",
-      "statusBarItem.hoverBackground": "#1a1a1a00",
-      "tab.activeBorder": "#1a1a1a00"
-    },
-  "peacock.color": "#00000000"
-}
+   ]}
