@@ -18,13 +18,11 @@
    {% if request.user|has_group:"teacher" %}
       <a href="database" class="w3-button w3-yellow">View Database</a></br>
       <a href="database/latebooks" class="w3-button w3-yellow">Late Dues</a></br>
-      <a href="password_change" class="w3-button w3-yellow">Change Password</a></br>
    {% endif %}
    {% if  user.is_superuser %}
      <a href="admin_panel" class="w3-button w3-yellow">Admin Tasks</a>
    {% endif %}
   </div>
-</div>
 <div>
 {% for message in messages %}
    <font color ='black'><h3> {{message}} </h3></font>

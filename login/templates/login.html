@@ -67,9 +67,7 @@ input[type=submit]
           </div>
       
           <!-- Login Form -->
-            {% for message in messages %}
-                {{message}}
-            {% endfor %}
+  
             <form method="POST">
               {% csrf_token %}
                 <p><b>Username</b></p>
