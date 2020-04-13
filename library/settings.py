@@ -116,7 +116,14 @@ AUTH_PASSWORD_VALIDATORS = [
 # More details https://django-q.readthedocs.io/en/latest/configure.html
 # django Q is more for speeding up the system. for example sending mails.
 Q_CLUSTER = {
-    "name": "shop",
+    'name': 'LIB_OFFLOADER',
+    'workers': 3,
+    'recycle': 500,
+    'timeout': 180,
+    'compress': True,
+    'save_limit': 250,
+    'queue_limit': 500,
+    'cpu_affinity': 1,
     "orm": "default",  # Use Django's ORM + database for broker
 }
 

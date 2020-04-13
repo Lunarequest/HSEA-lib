@@ -1,4 +1,5 @@
 from datetime import datetime, timedelta
+from django_q.tasks import async_task
 from django.shortcuts import render, redirect, HttpResponse
 from django.contrib import messages
 from django.core.mail import send_mail
@@ -125,11 +126,9 @@ def late(request):
         return response
     else:
         return redirect("/error/402")
-
-def report(request):
-    if request.user.groups.filter(name__in=['teacher']):
-        late_dues = Late_dues.objects.all()
-        for account in late_dues.iterator():
+def offline_emailer():
+     late_dues = Late_dues.objects.all()
+     for account in late_dues.iterator():
             student_id = account.student_id
             grades = student.objects.values("student_grade").filter(pk=student_id).values_list("student_grade", flat=True)
             grades = grades[0]
@@ -153,7 +152,11 @@ def report(request):
                 [email1, email2],
                 fail_silently=True
     )
-        return redirect("/database/latebooks")
+
+def report(request):
+    if request.user.groups.filter(name__in=['teacher']):
+       async_task(offline_emailer)
+       return redirect("/database/latebooks")
     else:
         return redirect("/error/402")
 
