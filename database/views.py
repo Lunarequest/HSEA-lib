@@ -103,11 +103,9 @@ def pull(request):
             return response
     else:
         return redirect("/error/402")
-
-def late(request):
-    if request.user.groups.filter(name__in=['teacher']):
-        late_books = Issues.objects.filter(return_date__lt=datetime.now())
-        for book in late_books.iterator():
+def late_book_genrator():
+    late_books = Issues.objects.filter(return_date__lt=datetime.now())
+    for book in late_books.iterator():
             S_id = book.student_id
             HSEA_code =  book.Ind_Book_ID
             ret_date = book.return_date
@@ -121,6 +119,9 @@ def late(request):
                 Name = row[0]
                 q = Late_dues(Link=Link, student_id=S_id, Ind_Book_ID=HSEA_code,return_date=ret_date, delay=z , Name=Name)
                 q.save()
+def late(request):
+    if request.user.groups.filter(name__in=['teacher']):
+        async_task(late_book_genrator)
         items = Late_dues.objects.all()
         response = render(request, "lib/late.html", locals())
         return response
